@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Event\StoreRequest;
+use App\Http\Requests\Event\UpdateRequest;
 use App\Models\Event;
 use App\Http\Controllers\Controller;
 
@@ -12,33 +14,24 @@ class EventController extends Controller
         return Event::all();
     }
 
-    public function store(Request $request){
-        $event = new Event;
-        $event->title = $request->title;
-        $event->locality = $request->locality;
-        $event->img = $request->img;
-        $event->participants = $request->participants;
-        $event->description = $request->description;
-        //$event->date = $request->date;
-        $event->save();
+    public function store(StoreRequest $request){
+        $validated = $request->validated();
+        return Event::create($validated);
+    }
 
+    public function show(Event $event){
+        return Event::findOrFail($event->id);
+    }
+
+
+    public function update(UpdateRequest $request, Event $event){
+        $validated = $request->validated();
+        $event->update($validated);
+        $event->refresh();
         return $event;
     }
 
-    public function show($id){
-        return Event::findOrFail($id);
-    }
-
-
-    public function update(Request $request, $id){
-        $event = Event::findOrFail($id);
-        $event->update($request->all());
-
-        return $event;
-    }
-
-    public function destroy($id){
-        $event = Event::findOrFail($id);
-        $event->delete();
+    public function destroy(Event $event){
+        return $event->delete();
     }
 }

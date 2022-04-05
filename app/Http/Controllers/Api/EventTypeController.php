@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\EventType;
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\EventType\StoreRequest;
+use App\Http\Requests\EventType\UpdateRequest;
+
 
 class EventTypeController extends Controller{
 
@@ -13,27 +16,24 @@ class EventTypeController extends Controller{
         return EventType::all();
     }
 
-    public function store(Request $request){
-        $event_type = new EventType;
-        $event_type->name = $request->name;
-        $event_type->save();
-
-        return $event_type;
+    public function store(StoreRequest $request){
+        $validated = $request->validated();
+        return EventType::create($validated);
     }
 
-    public function show($id){
-        return EventType::findOrFail($id);
+    public function show(EventType $eventType){
+        return EventType::findOrFail($eventType->id);
     }
 
-    public function update(Request $request, $id){
-        $event_type = EventType::findOrFail($id);
-        $event_type->update($request->all());
+    public function update(UpdateRequest $request, EventType $eventType){
+        $validated = $request->validated();
+        $eventType->update($validated);
+        $eventType->refresh();
 
-        return $event_type;
+        return $eventType;
     }
 
-    public function destroy($id){
-        $event_type = EventType::findOrFail($id);
-        $event_type->delete();
+    public function destroy(EventType $eventType){
+        $eventType->delete();
     }
 }
