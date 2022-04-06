@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
         return [
             "title" => 'required',
             "locality" => 'required',
-            //"area_id" => 'required',
+            "event_type_id" => 'required',
             "img" => 'required',
             "participants" => 'required',
             "description" => 'required',

@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventType extends Model{
     
+    use HasFactory;
     protected $fillable = ['name'];
 
-    use HasFactory;
+    public function events() {
+        return $this->hasMany('App\Models\Event');
+    }
 }

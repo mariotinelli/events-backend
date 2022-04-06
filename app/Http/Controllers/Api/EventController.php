@@ -16,6 +16,14 @@ class EventController extends Controller
 
     public function store(StoreRequest $request){
         $validated = $request->validated();
+        $img = $validated['img'];
+        $filenameWithExt = $img->getClientOriginalName();
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $img->getClientOriginalExtension();
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        $path = $img->storeAs('public/img', $fileNameToStore);
+        $validated['img'] = $fileNameToStore;
+
         return Event::create($validated);
     }
 
