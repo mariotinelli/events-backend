@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
         return [
             "title" => 'sometimes',
             "locality" => 'sometimes',
-            //"area_id" => 'sometimes',
+            "event_type_id" => 'sometimes',
             "img" => 'sometimes',
             "participants" => 'sometimes',
             "description" => 'sometimes',

@@ -24,6 +24,7 @@ Route::get('events', [EventController::class, 'index']);
 Route::post('event', [EventController::class, 'store']);
 Route::get('event/{event}', [EventController::class, 'show']);
 Route::put('event/{event}', [EventController::class, 'update']);
+Route::post('event/update/{event}', [EventController::class, 'updateEvent']);
 Route::delete('event/{event}', [EventController::class, 'destroy']);
 
 

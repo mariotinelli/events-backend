@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            //$table->string('owner'); // Ver foreign id
+            //$table->foreignId('user_id')->constrained();
             $table->string('locality');
             $table->string('img');
             $table->integer('participants');
             $table->text('description');
-            //$table->string('type');  // Ver foreign id
-            //$table->dateTime('date');
+            //$table->foreignId('event_type_id')->constrained();
+            $table->date('date');
             $table->timestamps();
         });
     }
